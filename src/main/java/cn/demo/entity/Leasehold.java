@@ -1,9 +1,10 @@
 package cn.demo.entity;
 
+import java.time.LocalDateTime;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import cn.demo.constant.CarStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,13 +13,11 @@ import lombok.NoArgsConstructor;
 @TableName
 @AllArgsConstructor
 @NoArgsConstructor
-public class Car {
+public class Leasehold {
     @TableId
     private Long id;
-    private String name;
-    private String license;
-    private String img;
-    private CarStatusEnum status;
-    private String desc;
-    private Integer sort;
+    private Long userId;
+    private Long carId;
+    private LocalDateTime lendTime;
+    private LocalDateTime remandTime;
 }
