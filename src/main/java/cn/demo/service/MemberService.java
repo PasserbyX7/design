@@ -9,6 +9,5 @@ import cn.demo.entity.Member;
 
 public interface MemberService extends IService<Member>{
     void register(UserDTO user);
-    String login(UserDTO user);
     UserDetails getUserDetails(String phone);
 }

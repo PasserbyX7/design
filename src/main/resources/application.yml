@@ -5,7 +5,7 @@ spring:
   datasource:
     username: root
     password: cao981127
-    url: jdbc:mysql:///demo?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql:///design?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis-plus:
     typeEnumsPackage: cn.demo.constant

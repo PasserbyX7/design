@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import cn.demo.api.ErrorCode;
 import cn.demo.api.R;
+import cn.demo.exception.PhoneExistException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -33,6 +34,11 @@ public class ControllerAdviceConfiguration {
         // @formatter:on
         log.error("数据校验异常：[{}]", sb.toString());
         return R.fail(ErrorCode.USER_REQUEST_PARAM_ERROR, map);
+    }
+
+    @ExceptionHandler(PhoneExistException.class)
+    public R<Void> handleException(PhoneExistException E) {
+        return R.fail(ErrorCode.USER_PHONE_EXIST_ERROR);
     }
 
     @ExceptionHandler(Throwable.class)

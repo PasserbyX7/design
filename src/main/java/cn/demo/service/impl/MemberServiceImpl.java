@@ -22,12 +22,6 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, Member> implements
     }
 
     @Override
-    public String login(UserDTO user) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public UserDetails getUserDetails(String phone) {
         Member member = getOne(Wrappers.<Member>lambdaQuery().eq(Member::getPhone, phone));
         member.setAuthorities(null);// TODO 用户权限待查出

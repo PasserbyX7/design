@@ -8,18 +8,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.demo.api.R;
 import cn.demo.dto.UserDTO;
+import cn.demo.service.JWTService;
 import cn.demo.service.MemberService;
 
 @RestController
-@RequestMapping("/login")
-public class LoginController {
+@RequestMapping("/auth")
+public class AuthController {
 
     @Autowired
     private MemberService memberService;
 
-    @PostMapping
+    @Autowired
+    private JWTService jwtService;
+
+    @PostMapping("/login")
     public R<String> login(@RequestBody UserDTO user) {
-        return R.ok(memberService.login(user));
+        return R.ok(jwtService.login(user.getPhone(), user.getPassword()));
     }
 
+    @PostMapping("/register")
+    public R<Void> register(@RequestBody UserDTO user) {
+        memberService.register(user);
+        return R.ok();
+    }
 }
