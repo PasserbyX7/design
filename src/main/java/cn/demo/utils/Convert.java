@@ -5,24 +5,22 @@ import org.springframework.beans.BeanUtils;
 public interface Convert<S, T> {
 
     default T doForward(S s, Class<T> clazz) {
-        T t=null;
         try {
-            t=clazz.getDeclaredConstructor().newInstance();
-        }catch (Exception e) {
+            T t = clazz.getDeclaredConstructor().newInstance();
+            BeanUtils.copyProperties(s, t);
+            return t;
+        } catch (Exception e) {
             throw new AssertionError("正向转化失败方法!");
         }
-        BeanUtils.copyProperties(s, t);
-        return t;
     }
 
-    default S doBackward(T t,Class<S> clazz){
-        S s=null;
+    default S doBackward(T t, Class<S> clazz) {
         try {
-            s=clazz.getDeclaredConstructor().newInstance();
-        }catch (Exception e) {
+            S s = clazz.getDeclaredConstructor().newInstance();
+            BeanUtils.copyProperties(t, s);
+            return s;
+        } catch (Exception e) {
             throw new AssertionError("逆向转化失败方法!");
         }
-        BeanUtils.copyProperties(t, s);
-        return s;
     }
 }

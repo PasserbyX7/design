@@ -16,12 +16,20 @@ public class JWTUtils {
 
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
+    private String header = "token";
     private String secret = "f4e2e52034348f86b67cde581c0f9eb5";
     private long expire = JWT_TOKEN_VALIDITY * 1000;
-    private String header = "token";
 
     public String getHeader() {
         return header;
+    }
+    
+    public Boolean validateToken(String token, UserDetails userDetails) {
+        return (getUsernameFromToken(token).equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public String generateToken(UserDetails userDetails) {
+        return doGenerateToken(new HashMap<>(), userDetails.getUsername());
     }
 
     public String getUsernameFromToken(String token) {
@@ -46,10 +54,6 @@ public class JWTUtils {
         return expiration.before(new Date());
     }
 
-    public String generateToken(UserDetails userDetails) {
-        return doGenerateToken(new HashMap<>(), userDetails.getUsername());
-    }
-
     private String doGenerateToken(Map<String, Object> claims, String subject) {
         // @formatter:off
         // return Jwts.builder()
@@ -63,12 +67,9 @@ public class JWTUtils {
         var jwt = Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expire)).signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
-        System.out.println(getExpirationDateFromToken(jwt));
+        System.out.println(subject);
         System.out.println(getUsernameFromToken(jwt));
         return jwt;
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        return (getUsernameFromToken(token).equals(userDetails.getUsername()) && !isTokenExpired(token));
-    }
 }
