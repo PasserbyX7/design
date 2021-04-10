@@ -65,5 +65,4 @@ public class JWTUtils {
                         .compact();
         // @formatter:on
     }
-
 }

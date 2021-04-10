@@ -20,6 +20,7 @@ public enum ErrorCode {
     USER_SMS_CODE_SEND_ERROR("A0134","用户短信验证码发送错误"),
     USER_LOGIN_ERROR("A200","用户登录错误"),
     USER_OAUTH_LOGIN_ERROR("A0223","用户第三方登录失败"),
+    USER_ACCESS_DENIED_ERROR("A0300","用户访问权限错误"),
     USER_REQUEST_SERVICE_ERROR("A0500","用户请求服务错误"),
 
     SYS_ERROR("B0001","系统执行错误"),

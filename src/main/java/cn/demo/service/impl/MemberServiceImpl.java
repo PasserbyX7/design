@@ -1,14 +1,19 @@
 package cn.demo.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import cn.demo.dao.MemberDao;
 import cn.demo.dto.UserDTO;
 import cn.demo.entity.Member;
+import cn.demo.entity.Role;
 import cn.demo.exception.PhoneExistException;
 import cn.demo.exception.UsernameExistException;
 import cn.demo.service.MemberService;
@@ -25,8 +30,22 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, Member> implements
     @Override
     public UserDetails getUserDetails(String username) {
         Member member = getOne(Wrappers.<Member>lambdaQuery().eq(Member::getUsername, username));
-        member.setAuthorities(null);// TODO 用户权限待查出
+        // @formatter:off
+        member.setAuthorities(
+            listRoleByUserId(member.getId())
+                .stream()
+                .map(Role::getEnname)
+                .map(e->"ROLE_"+e)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList())
+        );
+        // @formatter:on
         return member;
+    }
+
+    @Override
+    public List<Role> listRoleByUserId(Long memberId) {
+        return baseMapper.listRoleByUserId(memberId);
     }
 
     private void checkUsernameUnique(String username) throws UsernameExistException {

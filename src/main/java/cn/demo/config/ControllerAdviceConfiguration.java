@@ -3,6 +3,7 @@ package cn.demo.config;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,6 +37,10 @@ public class ControllerAdviceConfiguration {
         // @formatter:on
         log.error("数据校验异常：[{}]", sb.toString());
         return R.fail(ErrorCode.USER_REQUEST_PARAM_ERROR, map);
+    }
+    @ExceptionHandler(AccessDeniedException.class)
+    public R<Void> handleException(AccessDeniedException E) {
+        return R.fail(ErrorCode.USER_ACCESS_DENIED_ERROR);
     }
 
     @ExceptionHandler(PhoneExistException.class)

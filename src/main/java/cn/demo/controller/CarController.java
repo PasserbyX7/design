@@ -3,6 +3,7 @@ package cn.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,16 +23,19 @@ public class CarController {
     @Autowired
     private CarService carService;
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping
     public R<List<Car>> list() {
         return R.ok(carService.list());
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/{carId}")
     public R<Car> getById(@PathVariable Long carId) {
         return R.ok(carService.getById(carId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public R<Void> save(@RequestBody Car car) {
         carService.save(car);
