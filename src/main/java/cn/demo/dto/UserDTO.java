@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class UserDTO {
-    private String phone;
+    private String username;
     private String password;
 
     public Member convertToMember() {

@@ -23,7 +23,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public R<String> login(@RequestBody UserDTO user) {
-        return R.ok(jwtService.login(user.getPhone(), user.getPassword()));
+        return R.ok(jwtService.login(user.getUsername(), user.getPassword()));
     }
 
     @PostMapping("/register")

@@ -23,7 +23,7 @@ public class JWTUtils {
     public String getHeader() {
         return header;
     }
-    
+
     public Boolean validateToken(String token, UserDetails userDetails) {
         return (getUsernameFromToken(token).equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
@@ -56,20 +56,14 @@ public class JWTUtils {
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
         // @formatter:off
-        // return Jwts.builder()
-        //                 .setClaims(claims)
-        //                 .setSubject(subject)
-        //                 .setIssuedAt(new Date(System.currentTimeMillis()))
-        //                 .setExpiration(new Date(System.currentTimeMillis() + expire))
-        //                 .signWith(SignatureAlgorithm.HS512, secret)
-        //                 .compact();
+        return Jwts.builder()
+                        .setClaims(claims)
+                        .setSubject(subject)
+                        .setIssuedAt(new Date(System.currentTimeMillis()))
+                        .setExpiration(new Date(System.currentTimeMillis() + expire))
+                        .signWith(SignatureAlgorithm.HS512, secret)
+                        .compact();
         // @formatter:on
-        var jwt = Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expire)).signWith(SignatureAlgorithm.HS512, secret)
-                .compact();
-        System.out.println(subject);
-        System.out.println(getUsernameFromToken(jwt));
-        return jwt;
     }
 
 }

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import cn.demo.api.ErrorCode;
 import cn.demo.api.R;
 import cn.demo.exception.PhoneExistException;
+import cn.demo.exception.UserLoginException;
+import cn.demo.exception.UsernameExistException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -39,6 +41,16 @@ public class ControllerAdviceConfiguration {
     @ExceptionHandler(PhoneExistException.class)
     public R<Void> handleException(PhoneExistException E) {
         return R.fail(ErrorCode.USER_PHONE_EXIST_ERROR);
+    }
+
+    @ExceptionHandler(UsernameExistException.class)
+    public R<Void> handleException(UsernameExistException E) {
+        return R.fail(ErrorCode.USER_USERNAME_EXIST_ERROR);
+    }
+
+    @ExceptionHandler(UserLoginException.class)
+    public R<Void> handleException(UserLoginException E) {
+        return R.fail(ErrorCode.USER_LOGIN_ERROR);
     }
 
     @ExceptionHandler(Throwable.class)

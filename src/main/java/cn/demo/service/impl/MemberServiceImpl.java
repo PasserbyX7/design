@@ -10,6 +10,7 @@ import cn.demo.dao.MemberDao;
 import cn.demo.dto.UserDTO;
 import cn.demo.entity.Member;
 import cn.demo.exception.PhoneExistException;
+import cn.demo.exception.UsernameExistException;
 import cn.demo.service.MemberService;
 
 @Service
@@ -17,19 +18,19 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, Member> implements
 
     @Override
     public void register(UserDTO user) {
-        checkPhoneUnique(user.getPhone());
+        checkUsernameUnique(user.getUsername());
         save(user.convertToMember());
     }
 
     @Override
-    public UserDetails getUserDetails(String phone) {
-        Member member = getOne(Wrappers.<Member>lambdaQuery().eq(Member::getPhone, phone));
+    public UserDetails getUserDetails(String username) {
+        Member member = getOne(Wrappers.<Member>lambdaQuery().eq(Member::getUsername, username));
         member.setAuthorities(null);// TODO 用户权限待查出
         return member;
     }
 
-    private void checkPhoneUnique(String phone) throws PhoneExistException {
-        if (count(Wrappers.<Member>lambdaQuery().eq(Member::getPhone, phone)) != 0)
+    private void checkUsernameUnique(String username) throws UsernameExistException {
+        if (count(Wrappers.<Member>lambdaQuery().eq(Member::getUsername, username)) != 0)
             throw new PhoneExistException();
     }
 
