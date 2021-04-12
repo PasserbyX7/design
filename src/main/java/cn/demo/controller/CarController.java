@@ -2,6 +2,8 @@ package cn.demo.controller;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.demo.api.R;
+import cn.demo.dto.CarPageQueryDTO;
 import cn.demo.entity.Car;
 import cn.demo.service.CarService;
 
@@ -35,6 +38,10 @@ public class CarController {
         return R.ok();
     }
 
+    @GetMapping
+    public R<Page<Car>> queryPage(CarPageQueryDTO carPageQueryDTO) {
+        return R.ok(carService.queryPage(carPageQueryDTO));
+    }
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping
