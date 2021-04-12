@@ -23,6 +23,19 @@ public class CarController {
     @Autowired
     private CarService carService;
 
+    @PutMapping("/{carId}/actions/reserve")
+    public R<Void> reserve(@PathVariable Long carId) {
+        carService.reserved(carId);
+        return R.ok();
+    }
+
+    @PutMapping("/{carId}/actions/cancel-reservation")
+    public R<Void> cancelReservation(@PathVariable Long carId) {
+        carService.cancelReservation(carId);
+        return R.ok();
+    }
+
+
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping
     public R<List<Car>> list() {
