@@ -2,6 +2,8 @@ package cn.demo.controller;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.demo.api.R;
+import cn.demo.dto.CarPageQueryDTO;
 import cn.demo.entity.Car;
 import cn.demo.service.CarService;
 
@@ -23,7 +26,24 @@ public class CarController {
     @Autowired
     private CarService carService;
 
-    // @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @PutMapping("/{carId}/actions/reserve")
+    public R<Void> reserve(@PathVariable Long carId) {
+        carService.reserved(carId);
+        return R.ok();
+    }
+
+    @PutMapping("/{carId}/actions/cancel-reservation")
+    public R<Void> cancelReservation(@PathVariable Long carId) {
+        carService.cancelReservation(carId);
+        return R.ok();
+    }
+
+    @GetMapping
+    public R<Page<Car>> queryPage(CarPageQueryDTO carPageQueryDTO) {
+        return R.ok(carService.queryPage(carPageQueryDTO));
+    }
+
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping
     public R<List<Car>> list() {
         return R.ok(carService.list());
