@@ -31,7 +31,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         String token = request.getHeader(jwtUtils.getHeader());
         // @formatter:off
         Optional.ofNullable(request.getHeader(jwtUtils.getHeader()))
-                    .filter(StringUtils::isNotBlank)
+                    .filter(StringUtils::isBlank)
                     .map(jwtUtils::getUsernameFromToken)
                     .map(userDetailsService::loadUserByUsername)
                     .filter(user -> jwtUtils.validateToken(token, user))

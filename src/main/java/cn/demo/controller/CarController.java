@@ -39,9 +39,15 @@ public class CarController {
     }
 
     // @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    @GetMapping
+    @GetMapping("/page")
     public R<Page<Car>> queryPage(CarPageQueryDTO carPageQueryDTO) {
         return R.ok(carService.queryPage(carPageQueryDTO));
+    }
+
+    // @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @GetMapping
+    public R<List<Car>> list() {
+        return R.ok(carService.list());
     }
 
     // @PreAuthorize("hasAnyRole('USER','ADMIN')")

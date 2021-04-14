@@ -14,4 +14,5 @@ public interface MemberService extends IService<Member>{
     void register(UserDTO user);
     UserDetails getUserDetails(String phone);
     List<Role> listRoleByUserId(Long memberId);
+    List<Member> listWithRole();
 }
