@@ -1,5 +1,7 @@
 package cn.demo.entity;
 
+import java.math.BigDecimal;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -24,5 +26,6 @@ public class Car {
     private CarStatusEnum status;
     @TableField("`desc`")
     private String desc;
+    private BigDecimal price;
     private Integer sort;
 }

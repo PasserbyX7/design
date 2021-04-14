@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import cn.demo.constant.CarStatusEnum;
@@ -27,6 +28,9 @@ public class CarServiceImpl extends ServiceImpl<CarDao, Car> implements CarServi
 
     @Override
     public Page<Car> queryPage(CarPageQueryDTO carPageQueryDTO) {
-        return page(carPageQueryDTO.page(), Wrappers.<Car>lambdaQuery().like(Car::getName, carPageQueryDTO.getKey()));
+        var w = Wrappers.<Car>lambdaQuery();
+        if (StringUtils.isNotBlank(carPageQueryDTO.getKey()))
+            w.like(Car::getName, carPageQueryDTO.getKey());
+        return page(carPageQueryDTO.page(), w);
     }
 }

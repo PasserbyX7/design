@@ -27,6 +27,11 @@ public class NoticeController {
         return R.ok(noticeService.list());
     }
 
+    @GetMapping("/swiper")
+    public R<List<Notice>> getSwiperImg() {
+        return R.ok(noticeService.getSwiperImg());
+    }
+
     @GetMapping("/{noticeId}")
     public R<Notice> getById(@PathVariable Long noticeId) {
         return R.ok(noticeService.getById(noticeId));
