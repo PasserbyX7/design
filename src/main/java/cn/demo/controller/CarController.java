@@ -23,19 +23,19 @@ public class CarController {
     @Autowired
     private CarService carService;
 
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    // @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping
     public R<List<Car>> list() {
         return R.ok(carService.list());
     }
 
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    // @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/{carId}")
     public R<Car> getById(@PathVariable Long carId) {
         return R.ok(carService.getById(carId));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public R<Void> save(@RequestBody Car car) {
         carService.save(car);

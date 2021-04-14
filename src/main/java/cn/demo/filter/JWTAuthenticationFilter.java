@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +31,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         String token = request.getHeader(jwtUtils.getHeader());
         // @formatter:off
         Optional.ofNullable(request.getHeader(jwtUtils.getHeader()))
+                    .filter(StringUtils::isBlank)
                     .map(jwtUtils::getUsernameFromToken)
                     .map(userDetailsService::loadUserByUsername)
                     .filter(user -> jwtUtils.validateToken(token, user))

@@ -28,6 +28,11 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, Member> implements
     }
 
     @Override
+    public List<Member> listWithRole() {
+        return list().stream().map(e -> e.setRoles(listRoleByUserId(e.getId()))).collect(Collectors.toList());
+    }
+
+    @Override
     public UserDetails getUserDetails(String username) {
         Member member = getOne(Wrappers.<Member>lambdaQuery().eq(Member::getUsername, username));
         // @formatter:off

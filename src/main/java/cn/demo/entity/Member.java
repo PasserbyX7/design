@@ -2,6 +2,7 @@ package cn.demo.entity;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -15,9 +16,11 @@ import cn.demo.constant.GenderEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Data
 @TableName
+@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member implements UserDetails {
@@ -36,6 +39,8 @@ public class Member implements UserDetails {
     private LocalDateTime updateTime;
     @TableField(exist = false)
     private Collection<? extends GrantedAuthority> authorities;
+    @TableField(exist = false)
+    private List<Role>roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
